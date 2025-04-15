@@ -1,0 +1,1052 @@
+add:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------000-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x33'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+addi:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------000-----0010011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x13'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+addiw:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------000-----0011011'
+  extension:
+  - rv64_i
+  mask: '0x707f'
+  match: '0x1b'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+addw:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------000-----0111011
+  extension:
+  - rv64_i
+  mask: '0xfe00707f'
+  match: '0x3b'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+and:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------111-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x7033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+andi:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------111-----0010011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x7013'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+auipc:
+  arg_locs:
+    imm20:
+    - 31
+    - 12
+    rd:
+    - 11
+    - 7
+  encoding: '-------------------------0010111'
+  extension:
+  - rv_i
+  mask: '0x7f'
+  match: '0x17'
+  variable_fields:
+  - rd
+  - imm20
+beq:
+  arg_locs:
+    bimm12hi:
+    - 31
+    - 25
+    bimm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------000-----1100011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x63'
+  variable_fields:
+  - bimm12hi
+  - rs1
+  - rs2
+  - bimm12lo
+bge:
+  arg_locs:
+    bimm12hi:
+    - 31
+    - 25
+    bimm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------101-----1100011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x5063'
+  variable_fields:
+  - bimm12hi
+  - rs1
+  - rs2
+  - bimm12lo
+bgeu:
+  arg_locs:
+    bimm12hi:
+    - 31
+    - 25
+    bimm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------111-----1100011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x7063'
+  variable_fields:
+  - bimm12hi
+  - rs1
+  - rs2
+  - bimm12lo
+blt:
+  arg_locs:
+    bimm12hi:
+    - 31
+    - 25
+    bimm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------100-----1100011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x4063'
+  variable_fields:
+  - bimm12hi
+  - rs1
+  - rs2
+  - bimm12lo
+bltu:
+  arg_locs:
+    bimm12hi:
+    - 31
+    - 25
+    bimm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------110-----1100011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x6063'
+  variable_fields:
+  - bimm12hi
+  - rs1
+  - rs2
+  - bimm12lo
+bne:
+  arg_locs:
+    bimm12hi:
+    - 31
+    - 25
+    bimm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------001-----1100011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x1063'
+  variable_fields:
+  - bimm12hi
+  - rs1
+  - rs2
+  - bimm12lo
+ebreak:
+  arg_locs: {}
+  encoding: '00000000000100000000000001110011'
+  extension:
+  - rv_i
+  mask: '0xffffffff'
+  match: '0x100073'
+  variable_fields: []
+ecall:
+  arg_locs: {}
+  encoding: '00000000000000000000000001110011'
+  extension:
+  - rv_i
+  mask: '0xffffffff'
+  match: '0x73'
+  variable_fields: []
+fence:
+  arg_locs:
+    fm:
+    - 31
+    - 28
+    pred:
+    - 27
+    - 24
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    succ:
+    - 23
+    - 20
+  encoding: '-----------------000-----0001111'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0xf'
+  variable_fields:
+  - fm
+  - pred
+  - succ
+  - rs1
+  - rd
+jal:
+  arg_locs:
+    jimm20:
+    - 31
+    - 12
+    rd:
+    - 11
+    - 7
+  encoding: '-------------------------1101111'
+  extension:
+  - rv_i
+  mask: '0x7f'
+  match: '0x6f'
+  variable_fields:
+  - rd
+  - jimm20
+jalr:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------000-----1100111'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x67'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+lb:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------000-----0000011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x3'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+lbu:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------100-----0000011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x4003'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+ld:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------011-----0000011'
+  extension:
+  - rv64_i
+  mask: '0x707f'
+  match: '0x3003'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+lh:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------001-----0000011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x1003'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+lhu:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------101-----0000011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x5003'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+lui:
+  arg_locs:
+    imm20:
+    - 31
+    - 12
+    rd:
+    - 11
+    - 7
+  encoding: '-------------------------0110111'
+  extension:
+  - rv_i
+  mask: '0x7f'
+  match: '0x37'
+  variable_fields:
+  - rd
+  - imm20
+lw:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------010-----0000011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x2003'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+lwu:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------110-----0000011'
+  extension:
+  - rv64_i
+  mask: '0x707f'
+  match: '0x6003'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+or:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------110-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x6033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+ori:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------110-----0010011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x6013'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+sb:
+  arg_locs:
+    imm12hi:
+    - 31
+    - 25
+    imm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------000-----0100011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x23'
+  variable_fields:
+  - imm12hi
+  - rs1
+  - rs2
+  - imm12lo
+sd:
+  arg_locs:
+    imm12hi:
+    - 31
+    - 25
+    imm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------011-----0100011'
+  extension:
+  - rv64_i
+  mask: '0x707f'
+  match: '0x3023'
+  variable_fields:
+  - imm12hi
+  - rs1
+  - rs2
+  - imm12lo
+sh:
+  arg_locs:
+    imm12hi:
+    - 31
+    - 25
+    imm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------001-----0100011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x1023'
+  variable_fields:
+  - imm12hi
+  - rs1
+  - rs2
+  - imm12lo
+sll:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------001-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x1033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+slli:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    shamtd:
+    - 25
+    - 20
+  encoding: 000000-----------001-----0010011
+  extension:
+  - rv64_i
+  mask: '0xfc00707f'
+  match: '0x1013'
+  variable_fields:
+  - rd
+  - rs1
+  - shamtd
+slliw:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    shamtw:
+    - 24
+    - 20
+  encoding: 0000000----------001-----0011011
+  extension:
+  - rv64_i
+  mask: '0xfe00707f'
+  match: '0x101b'
+  variable_fields:
+  - rd
+  - rs1
+  - shamtw
+sllw:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------001-----0111011
+  extension:
+  - rv64_i
+  mask: '0xfe00707f'
+  match: '0x103b'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+slt:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------010-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x2033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+slti:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------010-----0010011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x2013'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+sltiu:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------011-----0010011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x3013'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
+sltu:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------011-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x3033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+sra:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0100000----------101-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x40005033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+srai:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    shamtd:
+    - 25
+    - 20
+  encoding: 010000-----------101-----0010011
+  extension:
+  - rv64_i
+  mask: '0xfc00707f'
+  match: '0x40005013'
+  variable_fields:
+  - rd
+  - rs1
+  - shamtd
+sraiw:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    shamtw:
+    - 24
+    - 20
+  encoding: 0100000----------101-----0011011
+  extension:
+  - rv64_i
+  mask: '0xfe00707f'
+  match: '0x4000501b'
+  variable_fields:
+  - rd
+  - rs1
+  - shamtw
+sraw:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0100000----------101-----0111011
+  extension:
+  - rv64_i
+  mask: '0xfe00707f'
+  match: '0x4000503b'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+srl:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------101-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x5033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+srli:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    shamtd:
+    - 25
+    - 20
+  encoding: 000000-----------101-----0010011
+  extension:
+  - rv64_i
+  mask: '0xfc00707f'
+  match: '0x5013'
+  variable_fields:
+  - rd
+  - rs1
+  - shamtd
+srliw:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    shamtw:
+    - 24
+    - 20
+  encoding: 0000000----------101-----0011011
+  extension:
+  - rv64_i
+  mask: '0xfe00707f'
+  match: '0x501b'
+  variable_fields:
+  - rd
+  - rs1
+  - shamtw
+srlw:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------101-----0111011
+  extension:
+  - rv64_i
+  mask: '0xfe00707f'
+  match: '0x503b'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+sub:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0100000----------000-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x40000033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+subw:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0100000----------000-----0111011
+  extension:
+  - rv64_i
+  mask: '0xfe00707f'
+  match: '0x4000003b'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+sw:
+  arg_locs:
+    imm12hi:
+    - 31
+    - 25
+    imm12lo:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: '-----------------010-----0100011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x2023'
+  variable_fields:
+  - imm12hi
+  - rs1
+  - rs2
+  - imm12lo
+xor:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000000----------100-----0110011
+  extension:
+  - rv_i
+  mask: '0xfe00707f'
+  match: '0x4033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+xori:
+  arg_locs:
+    imm12:
+    - 31
+    - 20
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+  encoding: '-----------------100-----0010011'
+  extension:
+  - rv_i
+  mask: '0x707f'
+  match: '0x4013'
+  variable_fields:
+  - rd
+  - rs1
+  - imm12
