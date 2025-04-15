@@ -1,0 +1,22 @@
+diff --git a/learning/learn_inv_distributed.py b/learning/learn_inv_distributed.py
+index 97247f9..7715929 100644
+--- a/learning/learn_inv_distributed.py
++++ b/learning/learn_inv_distributed.py
+@@ -23,7 +23,7 @@ from typing import Dict, List, Optional, Tuple, Type, Union
+ import yaml
+ 
+ import learning.booms_configs.RocketConfig as rocket
+-import learning.booms_configs.SmallBoomConfig as boom
++import learning.booms_configs.MediumBoomConfig as boom
+ from learning.examples import ConcreteExample
+ from learning.predicates import EqPred, EqPredConst, EqPredConstSet, Invariant, IsSafeInstrPred, NEqPred, PImplPred, Predicate, SynthesizablePImplPred, TruePred
+ from learning.utilities import debug_check_max_sat, debug_dump_sat_solutions, positive_examples_to_csv
+@@ -38,7 +38,7 @@ MAX_CTRL_WIDTH = 257
+ DEBUG_LEVEL = logger.INFO
+ DEBUG_POINT = -1
+ MONGO_URL = "mongodb://localhost:27017"
+-MONGO_COLLECTION = "smallboom-13-2"
++MONGO_COLLECTION = "mediumboom"
+ 
+ 
+ def expand_concrete_example(f1: str, f2: str, starting_cycle: int, state: BtorState) -> List[ConcreteExample]:
