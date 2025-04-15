@@ -20,6 +20,11 @@ if [ -d "pexs/logs-$1" ]; then
 else
     echo "Directory pexs/logs-$1 does not exist. Creating it now."
     cd pexs; unzip $1.zip;
+    # Abort if the unzip fails
+    if [ $? -ne 0 ]; then
+        echo "Unzip failed. Aborting."
+        exit 1
+    fi
     cd ..
 fi
 
@@ -27,9 +32,19 @@ fi
 if [ "$1" != "smallboom" ]; then
     echo "Applying patch for $1"
     git apply patches/$1.patch
+    # Abort if the patch fails
+    if [ $? -ne 0 ]; then
+        echo "Patch failed. Aborting."
+        exit 1
+    fi
 else
     echo "No patch needed for smallboom"
     git checkout boom
+    # Abort if the checkout fails
+    if [ $? -ne 0 ]; then
+        echo "Checkout failed. Aborting."
+        exit 1
+    fi
 fi
 
 # Clear redis
