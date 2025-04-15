@@ -81,18 +81,60 @@ def debug_check_max_sat(solver, state, next_state, literals, predicate, predicat
         debug_dump_sat_solutions(solver, predicate, state, next_state, predicate_set)
 
 
-
-@log_to_file('output.log')
 def debug_dump_sat_solutions(solver, predicate, state, next_state, predicate_set):
-    # print(f"Target: ", solver.getValue(next_state[1785].var))
-    print(f"FIRST: {predicate.to_smt(state).var}, {solver.getValue(predicate.to_smt(state).var)}")
-    print(f"NEXT: {solver.getValue(predicate.to_smt(next_state).var)}")
-    for h in predicate_set.impl_head:
-        print(f"{state.rvarmap[h.lvar]}({h.lvar}): {solver.getValue(state[h.lvar].var)}; {state.rvarmap[h.rvar]}: {solver.getValue(state[h.rvar].var)}")
-    for t in predicate_set.eq:
-        lval = solver.getValue(state[t.lvar].var)
-        print(f"{state.rvarmap[t.lvar]}({t.lvar}): {lval}; {state.rvarmap[t.rvar]}: {solver.getValue(state[t.rvar].var)}")
-        for value in predicate_set.allowed_values[(t.lvar, t.rvar)]:
-            if lval.toPythonObj() != value:
-                print(f"\t- {bin(value)}")
-    assert False, "NOT SUFFICIENT"
+    with open(f"debug_logs/{predicate}.log", 'w') as fd:
+        # fd.write(f"Target: ", solver.getValue(next_state[1785].var))
+        fd.write(f"FIRST: {predicate.to_smt(state).var}, {solver.getValue(predicate.to_smt(state).var)}\n")
+        fd.write(f"NEXT: {solver.getValue(predicate.to_smt(next_state).var)}\n")
+        fd.write("====================================\n")
+        fd.write(f" --- Expression: {predicate.to_smt(next_state).var}\n")
+        fd.write("====================================\n")
+        for h in predicate_set.impl_head:
+            lval = solver.getValue(state[h.lvar].var)
+            rval = solver.getValue(state[h.rvar].var)
+            if lval.toPythonObj() != rval.toPythonObj():
+                fd.write(f"xxx {state.rvarmap[h.lvar]}({h.lvar}): {lval}; {state.rvarmap[h.rvar]}({h.rvar}): {rval}\n")
+            else:
+                fd.write(f"--- {state.rvarmap[h.lvar]}({h.lvar}): {lval}; {state.rvarmap[h.rvar]}({h.rvar}): {rval}\n")
+        
+        for t in predicate_set.eq:
+            lval = solver.getValue(state[t.lvar].var)
+            fd.write(f"{state.rvarmap[t.lvar]}({t.lvar}): {lval}; {state.rvarmap[t.rvar]}({t.rvar}): {solver.getValue(state[t.rvar].var)}\n")
+            pos_values = set()
+            for value in predicate_set.allowed_values[(t.lvar, t.rvar)]:
+                pos_values.add(value)
+            if lval.toPythonObj() not in pos_values:
+                fd.write(f"  xxx Possible values: {[bin(x) for x in pos_values]}\n")
+            else:
+                fd.write(f"  --- Possible values: {[bin(x) for x in pos_values]}\n")
+    
+    # assert False, "NOT SUFFICIENT"
+
+
+def positive_examples_to_csv(examples, state, output_file="positive_examples.csv"):
+    import pandas as pd
+
+    data = {}
+
+    print(len(examples))
+
+    # Iterate over examples in chuncks of 17
+    for cycle, example in enumerate(examples):
+        cycle = cycle % 17
+        if cycle not in data:
+            data[cycle] = {}
+
+        for var, value in example._model.items():
+            # print(var, value)
+            name = state.rvarmap[var]
+            if name not in data[cycle]:
+                data[cycle][name] = []
+            data[cycle][name].append(value)
+
+    for _, v in data.items():
+        for n in v:
+            v[n] = list(dict.fromkeys(v[n]))
+
+    df = pd.DataFrame(data)
+    print(df)
+    df.to_csv(output_file)

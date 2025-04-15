@@ -116,7 +116,15 @@ class BtorPrgm:
         self._do_parse(prgm)
 
     def __getitem__(self, idx: int) -> BtorExprHandler:
-        return self.stmts[idx]
+        def memoized_pfn(*args):
+            if idx not in self._memo:
+                result = self.stmts[idx](*args)
+                self._memo[idx] = result
+            else:
+                result = self._memo[idx]
+            return result
+        return memoized_pfn
+        # return self.stmts[idx]
     
     def deps_of(self, idx: int) -> Set[int]:
         return self.deps[idx]
@@ -515,34 +523,48 @@ class BtorPrgm:
     def check_invariant(self, invar: "Invariant") -> bool: # type: ignore
         state = self.init_state()
         indicies = set()
+        assumps = []
+
+        self.slv.solver.setOption("produce-unsat-cores", "true")
+        self.slv.solver.setOption("incremental", "true")
+        self.slv.solver.setOption("sygus", "false")
+        self.slv.solver.setOption("minimal-unsat-cores", "true")
+        self.slv.solver.setOption("produce-models", "true")
 
         for pred in invar:
-            self.slv.add_assertion(pred.to_smt(state))
+            assumps.append(pred.to_smt(state).var)
             indicies.add(pred.lvar)
             try:
                 if pred.rvar:
                     indicies.add(pred.rvar)
-            except:
+            except AttributeError:
                 pass
 
-
         # Take a step and check self.assertion
+        assert self.assertion in indicies, "Invariant must include the assertion"
+    
         next_state = self.blank_state()
         for idx in indicies:
             if self.is_input(idx):
-                next_state.update(idx, state[idx])
+                name = state.name_of(idx)
+                self._make_state[name](self, next_state)
                 continue
             next_of = self.next_of_idx(idx)
             self.interpret_node_id(next_of, state, next_state)
 
         logger.success("Done creating step")
 
-        for pred in invar:
-            self.slv.add_assertion(pred.to_smt(next_state).bnot())
+        next_state_asserts = invar[0].to_smt(next_state)
+
+        for pred in invar[1:]:
+            next_state_asserts = next_state_asserts.band(pred.to_smt(next_state))
+
+        next_state_asserts = next_state_asserts.bnot()
+        self.slv.add_assertion(next_state_asserts)
 
         logger.success("Checking invariant")
 
-        if not self.slv.is_unsat():
+        if not self.slv.solver.checkSatAssuming(*assumps).isUnsat():
             raise AssertionError("Invariant violated!")
         else:
             logger.success("Invariant holds")

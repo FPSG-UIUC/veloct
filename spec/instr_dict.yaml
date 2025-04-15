@@ -278,6 +278,46 @@ bne:
   - rs1
   - rs2
   - bimm12lo
+div:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000001----------100-----0110011
+  extension:
+  - rv_m
+  mask: '0xfe00707f'
+  match: '0x2004033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+divu:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000001----------101-----0110011
+  extension:
+  - rv_m
+  mask: '0xfe00707f'
+  match: '0x2005033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
 ebreak:
   arg_locs: {}
   encoding: '00000000000100000000000001110011'
@@ -514,6 +554,86 @@ lwu:
   - rd
   - rs1
   - imm12
+mul:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000001----------000-----0110011
+  extension:
+  - rv_m
+  mask: '0xfe00707f'
+  match: '0x2000033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+mulh:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000001----------001-----0110011
+  extension:
+  - rv_m
+  mask: '0xfe00707f'
+  match: '0x2001033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+mulhsu:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000001----------010-----0110011
+  extension:
+  - rv_m
+  mask: '0xfe00707f'
+  match: '0x2002033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+mulhu:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000001----------011-----0110011
+  extension:
+  - rv_m
+  mask: '0xfe00707f'
+  match: '0x2003033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
 or:
   arg_locs:
     rd:
@@ -554,6 +674,46 @@ ori:
   - rd
   - rs1
   - imm12
+rem:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000001----------110-----0110011
+  extension:
+  - rv_m
+  mask: '0xfe00707f'
+  match: '0x2006033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
+remu:
+  arg_locs:
+    rd:
+    - 11
+    - 7
+    rs1:
+    - 19
+    - 15
+    rs2:
+    - 24
+    - 20
+  encoding: 0000001----------111-----0110011
+  extension:
+  - rv_m
+  mask: '0xfe00707f'
+  match: '0x2007033'
+  variable_fields:
+  - rd
+  - rs1
+  - rs2
 sb:
   arg_locs:
     imm12hi:

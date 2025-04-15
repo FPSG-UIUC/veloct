@@ -4,13 +4,17 @@ Implements classes to represent predicates for invariant learning
 
 
 import functools
-from typing import Dict, List, Optional, Type, Union
+from typing import Dict, List, Optional, Tuple, Type, Union
 import cvc5
 
 from cvc5 import Kind
 from symex.solver import SolverTerm
 
 from symex.symex_btor import BtorState
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Predicate:
@@ -164,6 +168,13 @@ class EqPredConst(Predicate):
         left_term = state[self.lvar]
         solver = left_term._solver
         bw = len(left_term)
+
+        max_value = 2**bw - 1
+
+        if self.val > max_value:
+            logger.warning(f"Value ({self.lvar}) has {self.val} is greater than maximum value {max_value}.")
+            self.val = self.val & max_value
+
         return state[self.lvar].beq(solver.bvv(self.val, bw))
     
     def eval(self, model: Dict[int, int]) -> bool:
@@ -173,6 +184,66 @@ class EqPredConst(Predicate):
         return model[self.var_L] == self.var_R
 
     def __repr__(self):
+        return f"{self.var_L} := {self.var_R}"
+    
+    def pretty_print(self, state: BtorState):
+        return f"({state.name_of(self.var_L)} == {self.var_R})"
+    
+
+class EqPredConstSet(Predicate):
+    def __init__(self, lvar: int, values: List[int], cond: Tuple=None):
+        self.lvar = lvar
+        self.values = values
+        self.cond = cond
+
+    @property
+    def var_L(self) -> int:
+        return self.lvar
+    
+    @property
+    def var_R(self) -> List[int]:
+        return self.values
+
+    def get_vars(self):
+        if self.cond:
+            return [self.lvar, self.cond[0]]
+        return [self.lvar]
+
+    def to_smt(self, state: Type[BtorState]) -> SolverTerm:
+        left_term = state[self.lvar]
+        solver = left_term._solver
+        bw = len(left_term)
+
+        max_value = 2**bw - 1
+
+        self.values = [val & max_value for val in self.values]
+
+        if self.cond:
+            cond_var = state[self.cond[0]]
+            cond_val = self.cond[1]
+            predicate = cond_var.beq(solver.bvv(cond_val, len(cond_var)))
+            return functools.reduce(lambda x, y: x.bor(y), [
+                state[self.lvar].beq(solver.bvv(val, bw))
+                for val in self.values
+            ]).bor(predicate)
+
+        return functools.reduce(lambda x, y: x.bor(y), [
+            state[self.lvar].beq(solver.bvv(val, bw))
+            for val in self.values
+        ])
+    
+    def eval(self, model: Dict[int, int]) -> bool:
+        if self.cond and self.cond[0] in model and model[self.cond[0]] == self.cond[1]:
+            return True
+        
+        if not (self.var_L in model):
+            return False
+        
+        return model[self.var_L] in self.var_R
+
+    def __repr__(self):
+        if self.cond:
+            return f"{self.var_L} := {self.var_R} if {self.cond[0]} == {self.cond[1]}"
         return f"{self.var_L} := {self.var_R}"
     
     def pretty_print(self, state: BtorState):
@@ -249,7 +320,6 @@ class SynthesizablePImplPred(Predicate):
     
     def concretize(self, value: int, mask: int) -> PImplPred:
         return PImplPred(self.lhs, NEqPred(self.rhs.lvar, value=value, mask=mask))
-
 
 
 class NEqPred(Predicate):
