@@ -624,7 +624,7 @@ app = typer.Typer()
 @app.command()
 def learn_invariant(
     prgm_file: Annotated[str, typer.Argument(help="The path to the program file in btor format")]="./targets/rocket.btor",
-    sims_dir: Annotated[str, typer.Argument(help="The path to the first trace file")]="./pexs/logs/",
+    sims_dir: Annotated[str, typer.Argument(help="The path to the first trace file")]="./pexs",
     # f1: Annotated[str, typer.Argument(help="The path to the first trace file")]="./boom/logs/add-1.json",
     # f2: Annotated[str, typer.Argument(help="The path to the second trace file")]="./boom/logs/add-2.json",
     # start_point: Annotated[int, typer.Argument(help="The starting point of the trace")]=54956,
