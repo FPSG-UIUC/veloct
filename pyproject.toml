@@ -1,6 +1,5 @@
 [tool.poetry]
 name = "VeloCT"
-requires-python = "==3.12"
 version = "0.1.0"
 description = ""
 authors = ["Sushant Dinesh <sushant.dinesh94@gmail.com>"]
@@ -8,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "==3.12.*"
 asyncio = "^3.4.3"
 cvc5 = "^1.2.0"
 pyyaml = "^6.0.2"
