@@ -131,6 +131,8 @@ class BtorPrgm:
         slv = self.slv
 
         for line in prgm.split("\n"):
+            if not line:
+                continue
             idx, op, ty, *args = line.split(" ")
             idx = int(idx)
 
