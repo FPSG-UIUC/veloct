@@ -672,7 +672,7 @@ def learn_invariant(
 
 @app.command()  
 def get_invar(
-    prgm_file: Annotated[str, typer.Argument(help="The path to the program file in btor format")]="rocket.btor",
+    prgm_file: Annotated[str, typer.Argument(help="The path to the program file in btor format")]="./targets/rocket.btor",
     instr_spec: Annotated[str, typer.Argument(help="RISCV Instruction specification file")]="./spec/instr_dict.yaml",
     safe_instructions: Annotated[List[str], typer.Argument(help="List of safe instructions")]=None,
 ):
